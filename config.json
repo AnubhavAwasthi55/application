@@ -1,0 +1,72 @@
+{
+  "app_name": "श्रीमद् वाल्मीकि रामायण",
+  "subtitle": "संस्कृत श्लोक एवं हिंदी अर्थ सहित",
+  "developer": "Mohit Software Solutions",
+  "version": "4.0 - Auto Data Loading Edition",
+  "copyright": "© 2025 Mohit Software Solutions. All Rights Reserved.",
+  "data_files": [
+    {
+      "kaand": "बालकाण्ड",
+      "kaand_english": "Bala Kanda",
+      "file": "data/1.json",
+      "description": "श्रीराम का जन्म, बाल्यकाल और सीता स्वयंवर",
+      "order": 1
+    },
+    {
+      "kaand": "अयोध्याकाण्ड",
+      "kaand_english": "Ayodhya Kanda",
+      "file": "data/2.json",
+      "description": "राम का वनगमन और दशरथ का देहांत",
+      "order": 2
+    },
+    {
+      "kaand": "अरण्यकाण्ड",
+      "kaand_english": "Aranya Kanda",
+      "file": "data/3.json",
+      "description": "वन में निवास, खर-दूषण वध और सीता हरण",
+      "order": 3
+    },
+    {
+      "kaand": "किष्किन्धाकाण्ड",
+      "kaand_english": "Kishkindha Kanda",
+      "file": "data/4.json",
+      "description": "हनुमान से मिलन, सुग्रीव मित्रता और वाली वध",
+      "order": 4
+    },
+    {
+      "kaand": "सुन्दरकाण्ड",
+      "kaand_english": "Sundara Kanda",
+      "file": "data/5.json",
+      "description": "हनुमान की लंका यात्रा और सीता मिलन",
+      "order": 5
+    },
+    {
+      "kaand": "युद्धकाण्ड",
+      "kaand_english": "Yuddha Kanda",
+      "file": "data/6.json",
+      "description": "राम-रावण युद्ध और रावण वध",
+      "order": 6
+    },
+    {
+      "kaand": "उत्तरकाण्ड",
+      "kaand_english": "Uttara Kanda",
+      "file": "data/7.json",
+      "description": "अयोध्या वापसी, रामराज्य और स्वर्गारोहण",
+      "order": 7
+    }
+  ],
+  "settings": {
+    "auto_load": true,
+    "cache_data": true,
+    "show_notifications": true,
+    "theme": "auto"
+  },
+  "data_format": {
+    "description": "Each JSON file should contain an array of objects with the following structure",
+    "example": {
+      "type": "श्लोक | दोहा/सोरठा | चौपाई | छंद",
+      "content": "Text content with \\n for line breaks",
+      "kaand": "बालकाण्ड | अयोध्याकाण्ड | etc."
+    }
+  }
+}

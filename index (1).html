@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>श्रीमद् वाल्मीकि रामायण - Mohit Software Solutions</title>
+    <style>
+        :root {
+            --color-primary: #ff6b35;
+            --color-secondary: #f7931e;
+            --color-bg: #fff8f0;
+            --color-surface: #ffffff;
+            --color-text: #2c1810;
+            --color-text-secondary: #8b4513;
+            --color-border: #e8d5c4;
+            --color-accent: #d4af37;
+            --color-success: #28a745;
+            --color-error: #dc3545;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-bg: #1a1410;
+                --color-surface: #2c2420;
+                --color-text: #f5e6d3;
+                --color-text-secondary: #c4a076;
+                --color-border: #4a3f35;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Noto Sans Devanagari', Arial, sans-serif;
+            background: linear-gradient(135deg, var(--color-bg) 0%, #ffe8d6 100%);
+            color: var(--color-text);
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .om-symbol {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header .subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .branding {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .kaand-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .kaand-card {
+            background: var(--color-surface);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .kaand-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(255,107,53,0.2);
+            border-color: var(--color-primary);
+        }
+
+        .kaand-card.active {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            border-color: var(--color-accent);
+        }
+
+        .kaand-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .kaand-card .english-name {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .kaand-card .description {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        .kaand-card .shloka-count {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .kaand-card.active .shloka-count {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .controls {
+            background: var(--color-surface);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .control-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .control-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--color-surface);
+            color: var(--color-text);
+            transition: all 0.3s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(255,107,53,0.1);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255,107,53,0.3);
+        }
+
+        .btn-secondary {
+            background: var(--color-accent);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+        }
+
+        .stats {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 150px;
+            background: var(--color-surface);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .label {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+        }
+
+        .content-area {
+            background: var(--color-surface);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            min-height: 400px;
+        }
+
+        .shloka-item {
+            background: linear-gradient(135deg, #fff9f5 0%, #fff 100%);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--color-primary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .shloka-item {
+                background: linear-gradient(135deg, #2c2420 0%, #3a332d 100%);
+            }
+        }
+
+        .shloka-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255,107,53,0.15);
+        }
+
+        .shloka-type {
+            display: inline-block;
+            background: var(--color-accent);
+            color: var(--color-text);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .shloka-content {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: var(--color-text);
+            white-space: pre-wrap;
+            font-family: 'Noto Sans Devanagari', 'Segoe UI', Arial, sans-serif;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--color-text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--color-text-secondary);
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--color-primary);
+        }
+
+        .spinner {
+            border: 4px solid var(--color-border);
+            border-top: 4px solid var(--color-primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.success {
+            background: var(--color-success);
+            color: white;
+        }
+
+        .notification.error {
+            background: var(--color-error);
+            color: white;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .control-row {
+                flex-direction: column;
+            }
+            
+            .control-group {
+                width: 100%;
+            }
+
+            .stat-card {
+                min-width: 100%;
+            }
+
+            .kaand-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .instructions {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 4px solid #2196f3;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .instructions {
+                background: linear-gradient(135deg, #1e3a5f 0%, #2a4f7a 100%);
+                border-left-color: #64b5f6;
+            }
+        }
+
+        .instructions h3 {
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+
+        .instructions ol {
+            margin-left: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .instructions code {
+            background: rgba(0,0,0,0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="om-symbol">🕉️</div>
+        <h1>श्रीमद् वाल्मीकि रामायण</h1>
+        <div class="subtitle">Srimad Valmiki Ramayan</div>
+        <div class="branding">Mohit Software Solutions</div>
+    </div>
+
+    <div class="container">
+        <div class="instructions">
+                <li>नीचे काण्ड कार्ड पर क्लिक करें - डेटा स्वचालित रूप से लोड होगा</li>
+                <li>फ़िल्टर और सर्च करें अपनी सुविधा के अनुसार</li>
+            </ol>
+        </div>
+
+        <div class="kaand-selector" id="kaandSelector">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>काण्ड लोड हो रहे हैं...</p>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="control-row">
+                <div class="control-group">
+                    <label for="typeFilter">प्रकार (Type):</label>
+                    <select id="typeFilter">
+                        <option value="all">सभी (All)</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="searchInput">खोजें (Search):</label>
+                    <input type="text" id="searchInput" placeholder="श्लोक में खोजें...">
+                </div>
+                
+                <div class="control-group" style="display: flex; gap: 0.5rem; align-items: flex-end;">
+                    <button class="btn btn-primary" onclick="app.applyFilters()">फ़िल्टर लागू करें</button>
+                    <button class="btn btn-secondary" onclick="app.resetFilters()">रीसेट</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="number" id="totalShlokas">0</div>
+                <div class="label">कुल श्लोक</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="displayedShlokas">0</div>
+                <div class="label">प्रदर्शित</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="currentKaand">-</div>
+                <div class="label">वर्तमान काण्ड</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="loadedFiles">0/7</div>
+                <div class="label">लोडेड फ़ाइलें</div>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div id="contentDisplay">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📖</div>
+                    <h3>काण्ड चुनें</h3>
+                    <p>कृपया ऊपर से कोई काण्ड चुनें</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;">डेटा स्वचालित रूप से लोड होगा</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>॥ श्री सीतारामाभ्यां नमः ॥</p>
+        <p><strong>Developed by Mohit Software Solutions</strong></p>
+        <p>Version 4.0 - Auto Data Loading Edition</p>
+        <p>© 2025 Mohit Software Solutions. All Rights Reserved.</p>
+    </div>
+
+    <script>
+        const app = {
+            config: null,
+            allData: {},
+            currentKaand: null,
+            filteredData: [],
+            
+            async init() {
+                try {
+                    await this.loadConfig();
+                    await this.renderKaandSelector();
+                    this.showNotification('Application loaded successfully!', 'success');
+                } catch (error) {
+                    console.error('Initialization error:', error);
+                    this.showNotification('Failed to load configuration', 'error');
+                }
+            },
+
+            async loadConfig() {
+                try {
+                    const response = await fetch('config.json');
+                    if (!response.ok) throw new Error('Config file not found');
+                    this.config = await response.json();
+                } catch (error) {
+                    console.error('Config load error:', error);
+                    // Use default config if file not found
+                    this.config = {
+                        app_name: "श्रीमद् वाल्मीकि रामायण",
+                        developer: "Mohit Software Solutions",
+                        data_files: []
+                    };
+                }
+            },
+
+            async renderKaandSelector() {
+                const selector = document.getElementById('kaandSelector');
+                
+                if (!this.config.data_files || this.config.data_files.length === 0) {
+                    selector.innerHTML = `
+                        <div class="empty-state" style="grid-column: 1/-1;">
+                            <div class="empty-state-icon">⚠️</div>
+                            <h3>कोई डेटा फ़ाइल कॉन्फ़िगर नहीं है</h3>
+                            <p>कृपया config.json में डेटा फ़ाइलें जोड़ें</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const cards = this.config.data_files.map(kaand => `
+                    <div class="kaand-card" onclick="app.selectKaand('${kaand.kaand}', '${kaand.file}')">
+                        <h3>${kaand.kaand}</h3>
+                        <div class="english-name">${kaand.kaand_english}</div>
+                        <div class="description">${kaand.description}</div>
+                        <span class="shloka-count" id="count-${kaand.kaand}">
+                            ${this.allData[kaand.kaand] ? this.allData[kaand.kaand].length + ' श्लोक' : 'Not Loaded'}
+                        </span>
+                    </div>
+                `).join('');
+
+                selector.innerHTML = cards;
+            },
+
+            async selectKaand(kaandName, filePath) {
+                this.currentKaand = kaandName;
+                
+                // Update active state
+                document.querySelectorAll('.kaand-card').forEach(card => {
+                    card.classList.remove('active');
+                });
+                event.currentTarget.classList.add('active');
+
+                // Load data if not already loaded
+                if (!this.allData[kaandName]) {
+                    await this.loadKaandData(kaandName, filePath);
+                }
+
+                // Display data
+                this.filteredData = this.allData[kaandName] || [];
+                this.updateStats();
+                this.populateTypeFilter();
+                this.renderContent();
+            },
+
+            async loadKaandData(kaandName, filePath) {
+                const contentDisplay = document.getElementById('contentDisplay');
+                contentDisplay.innerHTML = '<div class="loading"><div class="spinner"></div><p>डेटा लोड हो रहा है...</p></div>';
+
+                try {
+                    const response = await fetch(filePath);
+                    if (!response.ok) throw new Error(`File not found: ${filePath}`);
+                    
+                    const data = await response.json();
+                    this.allData[kaandName] = data;
+                    
+                    // Update count
+                    const countElement = document.getElementById(`count-${kaandName}`);
+                    if (countElement) {
+                        countElement.textContent = `${data.length} श्लोक`;
+                    }
+                    
+                    // Update loaded files count
+                    const loadedCount = Object.keys(this.allData).length;
+                    document.getElementById('loadedFiles').textContent = `${loadedCount}/7`;
+                    
+                    this.showNotification(`${kaandName} loaded successfully! (${data.length} shlokas)`, 'success');
+                } catch (error) {
+                    console.error('Data load error:', error);
+                    this.allData[kaandName] = [];
+                    this.showNotification(`Failed to load ${kaandName}: ${error.message}`, 'error');
+                    
+                    contentDisplay.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">❌</div>
+                            <h3>डेटा लोड करने में त्रुटि</h3>
+                            <p>${error.message}</p>
+                            <p style="margin-top: 1rem;">कृपया सुनिश्चित करें कि फ़ाइल <code>${filePath}</code> मौजूद है</p>
+                        </div>
+                    `;
+                }
+            },
+
+            populateTypeFilter() {
+                if (!this.filteredData || this.filteredData.length === 0) return;
+                
+                const types = [...new Set(this.filteredData.map(item => item.type))];
+                const typeFilter = document.getElementById('typeFilter');
+                typeFilter.innerHTML = '<option value="all">सभी (All)</option>';
+                
+                types.forEach(type => {
+                    if (type) {
+                        const option = document.createElement('option');
+                        option.value = type;
+                        option.textContent = type;
+                        typeFilter.appendChild(option);
+                    }
+                });
+            },
+
+            applyFilters() {
+                if (!this.currentKaand || !this.allData[this.currentKaand]) {
+                    this.showNotification('Please select a Kaand first', 'error');
+                    return;
+                }
+
+                const type = document.getElementById('typeFilter').value;
+                const search = document.getElementById('searchInput').value.toLowerCase();
+
+                const baseData = this.allData[this.currentKaand];
+                this.filteredData = baseData.filter(item => {
+                    const typeMatch = type === 'all' || item.type === type;
+                    const searchMatch = !search || item.content.toLowerCase().includes(search);
+                    return typeMatch && searchMatch;
+                });
+
+                this.updateStats();
+                this.renderContent();
+            },
+
+            resetFilters() {
+                document.getElementById('typeFilter').value = 'all';
+                document.getElementById('searchInput').value = '';
+                
+                if (this.currentKaand && this.allData[this.currentKaand]) {
+                    this.filteredData = this.allData[this.currentKaand];
+                    this.updateStats();
+                    this.renderContent();
+                }
+            },
+
+            updateStats() {
+                const totalShlokas = this.currentKaand && this.allData[this.currentKaand] 
+                    ? this.allData[this.currentKaand].length 
+                    : 0;
+                
+                document.getElementById('totalShlokas').textContent = totalShlokas;
+                document.getElementById('displayedShlokas').textContent = this.filteredData.length;
+                document.getElementById('currentKaand').textContent = this.currentKaand || '-';
+            },
+
+            renderContent() {
+                const contentDisplay = document.getElementById('contentDisplay');
+                
+                if (!this.filteredData || this.filteredData.length === 0) {
+                    contentDisplay.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">🔍</div>
+                            <h3>कोई परिणाम नहीं मिला</h3>
+                            <p>कृपया अपने फ़िल्टर बदलें या रीसेट करें</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const html = this.filteredData.map(item => {
+                    const content = item.content.replace(/\\n/g, '\n');
+                    return `
+                        <div class="shloka-item">
+                            <span class="shloka-type">${item.type || 'Unknown'}</span>
+                            <div class="shloka-content">${content}</div>
+                        </div>
+                    `;
+                }).join('');
+
+                contentDisplay.innerHTML = html;
+            },
+
+            showNotification(message, type = 'success') {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+        };
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Valmiki Ramayan - Auto Data Loading - Mohit Software Solutions');
+            app.init();
+        });
+    </script>
+</body>
+</html>
